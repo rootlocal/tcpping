@@ -1,5 +1,6 @@
 #include <getopt.h>
 #include "tcpping.h"
+#include "version.h"
 
 static volatile int keepRunning = 1;
 
@@ -8,13 +9,20 @@ void intHandler(int signal) {
     keepRunning = 0;
 }
 
+void display_version() {
+    printf("\nVersion: %d.%d.%d Revision: %s\n", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, GIT_HASH);
+}
+
 void display_usage(char *name) {
     printf("syntax: %s [-?] [-h host | ip] [-p port] [-c count]\n", name);
     printf("\t [--help] | [-?] Displays usage information\n");
     printf("\t [--host <host> | <ip>] | [-h <host> | <ip> Hostname or IP address destination\n");
     printf("\t [--port <port>] | [-p <port>] Port number\n");
     printf("\t [--count <count>] | [-c <count>] Count send packets\n");
+    printf("\t [--version] | [-V] Display version\n");
+    display_version();
 }
+
 
 int main(int argc, char *argv[]) {
     TcpPing *ping;
@@ -33,13 +41,14 @@ int main(int argc, char *argv[]) {
 
         int c, countPackets = 0, longIndex = 0;
 
-        static const char *optString = "h:p:c:?v";
+        static const char *optString = "h:p:c:?V";
         static const struct option longOpts[] = {
-                {"host",  required_argument, NULL, 'h'},
-                {"port",  required_argument, NULL, 'p'},
-                {"count", required_argument, NULL, 'c'},
-                {"help",  no_argument,       NULL, '?'},
-                {NULL,    no_argument,       NULL, 0}
+                {"host",    required_argument, NULL, 'h'},
+                {"port",    required_argument, NULL, 'p'},
+                {"count",   required_argument, NULL, 'c'},
+                {"help",    no_argument,       NULL, '?'},
+                {"version", no_argument,       NULL, 'V'},
+                {NULL,      no_argument,       NULL, 0}
         };
 
         while ((c = getopt_long(argc, argv, optString, longOpts, &longIndex)) != -1) {
@@ -55,6 +64,9 @@ int main(int argc, char *argv[]) {
                     break;
                 case '?':
                     display_usage(argv[0]);
+                    exit(EXIT_SUCCESS);
+                case 'V':
+                    display_version();
                     exit(EXIT_SUCCESS);
                 default:
                     break;
