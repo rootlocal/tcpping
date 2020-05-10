@@ -32,6 +32,7 @@ test: clean
 	cd $(BUILD) && $(CMAKE) -D ENABLE_UNIT_TESTS=ON ../
 	make -C $(BUILD)
 	$(MAKE) test -C $(BUILD)
+	$(BUILD)/bin/unit_tests
 
 .PHONY: clean
 clean: create-build
