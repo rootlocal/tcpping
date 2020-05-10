@@ -4,7 +4,6 @@ tcpping
 Sequentially creates tcp connections to the specified host and measures the latency.
 
 ### Build
-
 ```
 mkdir build
 cd build
@@ -14,9 +13,21 @@ make
 
 ### Install
 ```
-cmake -D CMAKE_INSTALL_PREFIX=to_install_dir/tcpping
+mkdir build
+cd build
+cmake -D CMAKE_INSTALL_PREFIX=to_install_dir/tcpping ../
 make
 make install
+```
+
+### Test
+```
+mkdir build
+cd build
+cmake -D ENABLE_UNIT_TESTS=ON ../
+make
+make test
+./bin/unit_tests
 ```
 
 ### Usage:

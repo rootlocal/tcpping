@@ -21,3 +21,8 @@ generate_version_git_h()
 
 # process src/CMakeLists.txt
 add_subdirectory(src)
+
+# enable testing
+enable_testing()        # <- we added this
+# process test/CMakeLists.txt
+add_subdirectory(test)  # <- we added this
