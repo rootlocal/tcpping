@@ -12,6 +12,13 @@ cmake ../
 make
 ```
 
+### Install
+```
+cmake -D CMAKE_INSTALL_PREFIX=to_install_dir/tcpping
+make
+make install
+```
+
 ### Usage:
 <pre>
 $ tcpping -h google.com -p 443 -c 4
