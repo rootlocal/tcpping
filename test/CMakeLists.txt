@@ -12,7 +12,7 @@ if (ENABLE_UNIT_TESTS)
 
     target_sources(unit_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../src/tcpping.cpp)
     target_include_directories(unit_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../src)
-    target_link_libraries(unit_tests PRIVATE gtest_main gtest)
+    target_link_libraries(unit_tests PRIVATE gtest_main gtest gmock gmock_main)
 
     add_test(unit ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/unit_tests)
 endif ()

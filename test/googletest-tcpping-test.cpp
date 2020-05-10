@@ -3,20 +3,36 @@
 #include "tcpping.h"
 
 TEST(TcpPingTest, address) {
+
+    // Arrange
     TcpPing *ping = new TcpPing;
     ping->set_address((char *) "127.0.0.1");
 
+    // Act
+
+    // Assert
+    printf("Before the Assert\n");
+
     ASSERT_STREQ(ping->get_address(), "127.0.0.1");
+    EXPECT_THROW(ping->set_address((char *) "badhost"), std::exception);
+
+    printf("After the Assert\n");
 
     delete ping;
 }
 
-
 TEST(TcpPingTest, port) {
+
+    // Arrange
     TcpPing *ping = new TcpPing;
     ping->set_port(443);
 
+    // Act
+
+    // Assert
+    printf("Before the Assert\n");
     ASSERT_EQ(ping->get_port(), 443);
+    printf("After the Assert\n");
 
     delete ping;
 }
