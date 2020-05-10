@@ -11,6 +11,11 @@
 #include <unistd.h>
 #include <sys/time.h>
 
+#if defined(__linux__)
+#include <cstring>
+#include <climits>
+#endif
+
 // I use it mostly for remote servers
 #define DEFAULT_PORT 22
 

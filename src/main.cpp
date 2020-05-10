@@ -1,4 +1,9 @@
 #include <getopt.h>
+
+#if defined(__FreeBSD__) || defined(__linux__)
+#include <signal.h>
+#endif
+
 #include "tcpping.h"
 #include "version.h"
 
