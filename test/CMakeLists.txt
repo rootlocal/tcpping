@@ -8,14 +8,11 @@ include(cmake/googletest.cmake)
 if (ENABLE_UNIT_TESTS)
 
     fetch_googletest(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/googletest)
-
     add_executable(unit_tests googletest-tcpping-test.cpp)
 
-    #target_sources(unit_tests PRIVATE "")
-
+    target_sources(unit_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../src/tcpping.cpp)
+    target_include_directories(unit_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../src)
     target_link_libraries(unit_tests PRIVATE gtest_main gtest)
-
-    target_include_directories(unit_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
     add_test(unit ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/unit_tests)
 endif ()

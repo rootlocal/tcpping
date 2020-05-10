@@ -10,8 +10,11 @@ TcpPing::TcpPing() {
 }
 
 TcpPing::~TcpPing() {
-    gettimeofday(&endTime, NULL);
 
+}
+
+void TcpPing::statistics() {
+    gettimeofday(&endTime, NULL);
     // note the ending time and calculate the duration of TCP ping
     long int diff = timeval_subtract(&endTime, &startTime);
 

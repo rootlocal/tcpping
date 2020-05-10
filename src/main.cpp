@@ -86,6 +86,8 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        ping->statistics();
+
     } catch (const std::exception &e) {
         printf("Error %s\n", e.what());
         delete ping;

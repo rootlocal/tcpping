@@ -36,6 +36,8 @@ public:
 
     int run();
 
+    void statistics();
+
     unsigned int get_seq();
 
 private:
