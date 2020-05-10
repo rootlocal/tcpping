@@ -1,3 +1,4 @@
+#include <getopt.h>
 #include "tcpping.h"
 
 static volatile int keepRunning = 1;
@@ -9,14 +10,15 @@ void intHandler(int signal) {
 
 void display_usage(char *name) {
     printf("syntax: %s [-?] [-h host | ip] [-p port] [-c count]\n", name);
-    printf("\t [-?] \t\t\t# Displays usage information\n");
-    printf("\t [-h host | ip] \t# Hostname or IP address destination\n");
-    printf("\t [-p port] \t\t# Port number\n");
-    printf("\t [-c count] \t\t# Count send packets\n");
+    printf("\t [--help] | [-?] Displays usage information\n");
+    printf("\t [--host <host> | <ip>] | [-h <host> | <ip> Hostname or IP address destination\n");
+    printf("\t [--port <port>] | [-p <port>] Port number\n");
+    printf("\t [--count <count>] | [-c <count>] Count send packets\n");
 }
 
 int main(int argc, char *argv[]) {
     TcpPing *ping;
+    int pingLastRunStatus = 0;
     ping = new TcpPing;
 
     // Ctrl+C handler
@@ -26,11 +28,21 @@ int main(int argc, char *argv[]) {
 
         if (argc <= 1) {
             display_usage(argv[0]);
+            exit(EXIT_FAILURE);
         }
 
-        int c, countPackets = 0;
+        int c, countPackets = 0, longIndex = 0;
 
-        while ((c = getopt(argc, argv, "h:p:c:?")) != -1) {
+        static const char *optString = "h:p:c:?v";
+        static const struct option longOpts[] = {
+                {"host",  required_argument, NULL, 'h'},
+                {"port",  required_argument, NULL, 'p'},
+                {"count", required_argument, NULL, 'c'},
+                {"help",  no_argument,       NULL, '?'},
+                {NULL,    no_argument,       NULL, 0}
+        };
+
+        while ((c = getopt_long(argc, argv, optString, longOpts, &longIndex)) != -1) {
             switch (c) {
                 case 'h':
                     ping->set_address(optarg);
@@ -45,12 +57,12 @@ int main(int argc, char *argv[]) {
                     display_usage(argv[0]);
                     exit(EXIT_SUCCESS);
                 default:
-                    abort();
+                    break;
             }
         }
 
         while (keepRunning) {
-            ping->run();
+            pingLastRunStatus = ping->run();
 
             if (countPackets > 0 && ping->get_seq() == countPackets) {
                 keepRunning = 0;
@@ -64,5 +76,5 @@ int main(int argc, char *argv[]) {
     }
 
     delete ping;
-    exit(EXIT_SUCCESS);
+    exit(pingLastRunStatus);
 }
