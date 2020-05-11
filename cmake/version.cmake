@@ -1,17 +1,6 @@
 function(generate_version_h)
     # in case Git is not available, we default to "unknown"
     set(GIT_HASH "unknown")
-    # generate file version.h based on version.h.in
-    configure_file(
-            cmake/version.h.in
-            generated/version.h
-            @ONLY
-    )
-endfunction()
-
-function(generate_version_git_h)
-    # in case Git is not available, we default to "unknown"
-    set(GIT_HASH "unknown")
 
     # find Git and if available set GIT_HASH variable
     find_package(Git QUIET)

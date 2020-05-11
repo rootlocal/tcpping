@@ -17,10 +17,13 @@ include(cmake/arch.cmake)
 macos_workaround()
 
 include(cmake/version.cmake)
-generate_version_git_h()
+generate_version_h()
 
 # process src/CMakeLists.txt
 add_subdirectory(src)
+
+message(STATUS CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE})
+
 
 # enable testing
 enable_testing()        # <- we added this

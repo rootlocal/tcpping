@@ -15,7 +15,9 @@ void intHandler(int signal) {
 }
 
 void display_version() {
-    printf("\nVersion: %d.%d.%d Revision: %s\n", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, GIT_HASH);
+    printf("Ver: %d.%d.%d ", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+    printf("Rev: %s\n", GIT_HASH);
+    printf("BUILD_TYPE: %s\n", BUILD_TYPE);
 }
 
 void display_usage(char *name) {
@@ -28,8 +30,8 @@ void display_usage(char *name) {
     display_version();
 }
 
-
 int main(int argc, char *argv[]) {
+
     TcpPing *ping;
     int pingLastRunStatus = 0;
     ping = new TcpPing;
