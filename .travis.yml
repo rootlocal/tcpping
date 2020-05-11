@@ -18,6 +18,9 @@ env:
 
 matrix:
   exclude:
+    - os: linux
+      compiler: clang
+      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
     - os: osx
       compiler: gcc
     - os: osx
