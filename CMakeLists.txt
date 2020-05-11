@@ -50,7 +50,7 @@ endif ()
 
 # Cross compiling
 if ("${TARGET_CPU}" STREQUAL "x86")
-    include(cmake/crossCompiling.cmake)
+    include(cmake/x86.cmake)
 endif ()
 
 

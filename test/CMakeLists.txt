@@ -7,8 +7,8 @@ include(cmake/googletest.cmake)
 
 if (ENABLE_UNIT_TESTS)
 
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
+    include(cmake/codeCoverage.cmake)
+    setup_target_for_coverage(coverage)
 
     fetch_googletest(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/googletest)
 

@@ -2,7 +2,7 @@
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get -qq update > /dev/null 2>&1
-sudo apt-get install -y g++ cmake make
+sudo apt-get install -y g++ cmake make lcov
 
 # CMAKE install
 CMAKE_VERSION="3.17.2"
@@ -24,11 +24,6 @@ export PATH="${CMAKE_DIR}/bin:${PATH}"
 if [ "${TARGET_CPU}" == "x86" ]; then
     sudo dpkg --add-architecture i386
     sudo apt-get -qq update > /dev/null 2>&1
-
-    # 32-lib
-    #sudo apt-get install -y liblua5.2-dev:i386
-    #sudo apt-get install -y libusb-1.0:i386
-
     # g++-multilib
     sudo apt-get install -y gcc-multilib
     sudo apt-get install -y g++-multilib

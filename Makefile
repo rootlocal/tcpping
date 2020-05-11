@@ -35,9 +35,14 @@ install: build-release
 test: clean
 	@echo "*** run test ***"
 	cd $(BUILD) && $(CMAKE) -DENABLE_UNIT_TESTS=ON -DCMAKE_BUILD_TYPE=Debug ../
-	make -C $(BUILD)
+	$(MAKE) -C $(BUILD)
 	$(MAKE) test -C $(BUILD)
 	$(BUILD)/bin/unit_tests
+
+.PHONY: coverage
+coverage: test
+	@echo "*** run coverage ***"
+	$(MAKE) coverage -C $(BUILD)
 
 .PHONY: clean
 clean: create-build
