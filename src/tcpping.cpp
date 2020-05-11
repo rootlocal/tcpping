@@ -16,7 +16,7 @@ TcpPing::~TcpPing() {
 void TcpPing::statistics() {
     gettimeofday(&endTime, NULL);
     // note the ending time and calculate the duration of TCP ping
-    long int diff = timeval_subtract(&endTime, &startTime);
+    unsigned long int diff = timeval_subtract(&endTime, &startTime);
 
     // summary
     printf("\n--- %s:%u tcpping statistics ---\n", get_address(), get_port());

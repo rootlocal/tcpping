@@ -3,10 +3,8 @@
 brew update > /dev/null 2>&1
 
 items=(
-    "gcc" 
-    "cmake" 
-    "gcc" 
-    "lcov" 
+    "cmake"
+    "lcov"
     "doxygen"
 )
 

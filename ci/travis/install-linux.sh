@@ -30,6 +30,6 @@ if [ "${TARGET_CPU}" == "x86" ]; then
     #sudo apt-get install -y libusb-1.0:i386
 
     # g++-multilib
+    sudo apt-get install -y gcc-multilib
     sudo apt-get install -y g++-multilib
-    sudo apt-get install -y ubuntu-toolchain-r-test
 fi
