@@ -30,7 +30,7 @@ install:
   - source ci/travis/install-$TRAVIS_OS_NAME.sh
 
 script:
-  -mkdir build
-  -cd build && cmake -DCMAKE_BUILD_TYPE=${BUILD_CONFIGURATION} -DTARGET_CPU=${TARGET_CPU} -DENABLE_UNIT_TESTS=ON ../
-  -make test -C build
-  -./build/bin/unit_tests
+  - mkdir build
+  - cd build && cmake -DCMAKE_BUILD_TYPE=${BUILD_CONFIGURATION} -DTARGET_CPU=${TARGET_CPU} -DENABLE_UNIT_TESTS=ON ../
+  - make test -C build
+  - ./build/bin/unit_tests
