@@ -7,8 +7,16 @@ include(cmake/googletest.cmake)
 
 if (ENABLE_UNIT_TESTS)
 
+    # we use this to get code coverage
+    if (CMAKE_CXX_COMPILER_ID MATCHES GNU)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+    endif ()
+
     fetch_googletest(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/googletest)
-    add_executable(unit_tests googletest-tcpping-test.cpp)
+
+    add_executable(unit_tests
+            googletest-tcpping-test.cpp
+            )
 
     target_sources(unit_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../src/tcpping.cpp)
     target_include_directories(unit_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../src)

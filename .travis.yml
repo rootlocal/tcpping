@@ -1,5 +1,4 @@
 dist: Bionic
-sudo: required
 
 language: cpp
 
@@ -13,9 +12,9 @@ compiler:
 
 env:
   - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
-  - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
+#  - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
   - TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
-  - TARGET_CPU=x86 BUILD_CONFIGURATION=Release
+#  - TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
 matrix:
   exclude:
@@ -23,8 +22,8 @@ matrix:
       compiler: gcc
     - os: osx
       env: TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
-    - os: osx
-      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
+#    - os: osx
+#      env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
 install:
   - source ci/travis/install-${TRAVIS_OS_NAME}.sh
@@ -38,3 +37,6 @@ script:
   - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then objdump -section-headers ./bin/tcpping; fi;
   - make test
   - ./bin/unit_tests
+
+after_success:
+#  - coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"

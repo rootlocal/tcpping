@@ -23,7 +23,7 @@ export PATH="${CMAKE_DIR}/bin:${PATH}"
 # multilib amd64->x86 cross compiling
 if [ "${TARGET_CPU}" == "x86" ]; then
     sudo dpkg --add-architecture i386
-    sudo apt-get -qq update
+    sudo apt-get -qq update > /dev/null 2>&1
 
     # 32-lib
     #sudo apt-get install -y liblua5.2-dev:i386
@@ -31,4 +31,5 @@ if [ "${TARGET_CPU}" == "x86" ]; then
 
     # g++-multilib
     sudo apt-get install -y g++-multilib
+    sudo apt-get install -y ubuntu-toolchain-r-test
 fi
