@@ -1,4 +1,4 @@
-dist: trusty
+dist: Bionic
 sudo: required
 
 language: cpp
@@ -31,6 +31,7 @@ install:
 
 script:
   - mkdir build
-  - cd build && cmake -DCMAKE_BUILD_TYPE=${BUILD_CONFIGURATION} -DTARGET_CPU=${TARGET_CPU} -DENABLE_UNIT_TESTS=ON ../
-  - make test -C build
-  - ./build/bin/unit_tests
+  - cd build
+  - cmake -DCMAKE_BUILD_TYPE=${BUILD_CONFIGURATION} -DTARGET_CPU=${TARGET_CPU} -DENABLE_UNIT_TESTS=ON ../
+  - make test
+  - ./bin/unit_tests
