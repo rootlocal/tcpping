@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-sudo apt-get update
+sudo apt-get -qq update > /dev/null 2>&1
 sudo apt-get install -y g++ cmake make
 
 # CMAKE install
@@ -26,8 +26,8 @@ if [ "${TARGET_CPU}" == "x86" ]; then
     sudo apt-get -qq update
 
     # 32-lib
-    sudo apt-get install -y liblua5.2-dev:i386
-    sudo apt-get install -y libusb-1.0:i386
+    #sudo apt-get install -y liblua5.2-dev:i386
+    #sudo apt-get install -y libusb-1.0:i386
 
     # g++-multilib
     sudo apt-get install -y g++-multilib

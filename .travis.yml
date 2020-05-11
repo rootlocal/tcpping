@@ -27,12 +27,14 @@ matrix:
       env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
 install:
-  - source ci/travis/install-$TRAVIS_OS_NAME.sh
+  - source ci/travis/install-${TRAVIS_OS_NAME}.sh
 
 script:
-  - mkdir build
-  - cd build
+  - mkdir build && cd build > /dev/null 2>&1
   - cmake -DCMAKE_BUILD_TYPE=${BUILD_CONFIGURATION} -DTARGET_CPU=${TARGET_CPU} -DENABLE_UNIT_TESTS=ON ../
   - make
+  - file ./bin/tcpping
+  - if [ "${TRAVIS_OS_NAME}" == "linux" ]; then objdump -af ./bin/tcpping; fi;
+  - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then objdump -section-headers ./bin/tcpping; fi;
   - make test
   - ./bin/unit_tests
