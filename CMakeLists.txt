@@ -15,7 +15,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
-if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+#[[if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     add_compile_options(
             #-Werror
 
@@ -36,7 +36,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -Wsign-conversion
             -Wsign-promo
     )
-endif ()
+endif ()]]
 
 # Processor Count
 include(cmake/processorCount.cmake)
