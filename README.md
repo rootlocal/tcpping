@@ -3,6 +3,8 @@ tcpping
 
 Sequentially creates tcp connections to the specified host and measures the latency.
 
+[![Build Status](https://travis-ci.org/rootlocal/tcpping.svg?branch=master)](https://travis-ci.org/rootlocal/tcpping)
+
 ### Build
 ```bash
 mkdir build
