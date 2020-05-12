@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        printf("Connecting to %s (%s)\n", ping->get_host(), ping->get_address());
+        printf("Connecting to %s (%s:%d)\n", ping->get_host(), ping->get_address(), ping->get_port());
 
         while (keepRunning) {
             pingLastRunStatus = ping->run();

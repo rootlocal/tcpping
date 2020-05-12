@@ -4,38 +4,35 @@
 #include "tcpping_fixture.cpp"
 
 TEST_F(TcpPingFixture, getSetAddress) {
-    // Arrange
     char address[15] = "127.0.0.1";
     ping->set_address((char *) &address);
-
-    // Act
-
-    // Assert
-    printf("Before the Assert\n");
     ASSERT_STREQ(ping->get_address(), address);
-    printf("After the Assert\n");
 }
 
 TEST_F(TcpPingFixture, ExceptionAddress) {
-    // Arrange
     char address[20] = "badhost";
-    // Act
-
-    // Assert
-    printf("Before the Assert\n");
-    EXPECT_THROW(ping->set_address((char *) address), std::exception);
-    printf("After the Assert\n");
+    EXPECT_THROW(ping->set_address((char *) &address), std::exception);
 }
 
 TEST_F(TcpPingFixture, GetSetPort) {
-    // Arrange
     int port = 443;
+
+    ASSERT_EQ(ping->get_port(), DEFAULT_PORT);
+
     ping->set_port(port);
-
-    // Act
-
-    // Assert
-    printf("Before the Assert\n");
     ASSERT_EQ(ping->get_port(), port);
-    printf("After the Assert\n");
+}
+
+TEST_F(TcpPingFixture, Gethost) {
+    char host[15] = "localhost";
+    ping->set_address((char *) &host);
+    ASSERT_STREQ(ping->get_host(), host);
+}
+
+TEST_F(TcpPingFixture, Run) {
+    ping->set_address((char *) &"github.com");
+    ping->set_port(443);
+    int res = ping->run();
+    printf("seq=%d", ping->get_seq());
+    ASSERT_EQ(res, 0);
 }

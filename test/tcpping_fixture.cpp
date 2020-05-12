@@ -20,10 +20,7 @@ public:
         printf("SetUp\n");
         ping = new TcpPing;
         char address[15] = "127.0.0.1";
-        int port = 80;
-
         ping->set_address((char *) &address);
-        ping->set_port(port);
     }
 
     void TearDown() override {
