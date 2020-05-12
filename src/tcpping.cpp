@@ -12,6 +12,7 @@ unsigned long int TcpPing::timeval_subtract(struct timeval *t2, struct timeval *
 
 TcpPing::TcpPing() {
     gettimeofday(&startTime, NULL);
+    //memset(&addr, 0, sizeof(addr));
 }
 
 void TcpPing::statistics() {
@@ -62,7 +63,7 @@ void TcpPing::set_address(char *address) {
 u_short TcpPing::get_port() {
 
     if (addr.sin_port == 0) {
-        set_port(static_cast<u_short> (DEFAULT_PORT));
+        set_port(DEFAULT_PORT);
     }
 
     return ntohs(addr.sin_port);

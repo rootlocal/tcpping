@@ -17,7 +17,7 @@ TEST_F(TcpPingFixture, ExceptionAddress) {
 TEST_F(TcpPingFixture, GetSetPort) {
     u_short port = 443;
 
-    ASSERT_EQ(ping->get_port(), static_cast<u_short> (DEFAULT_PORT));
+    ASSERT_EQ(ping->get_port(), DEFAULT_PORT);
 
     ping->set_port(port);
     ASSERT_EQ(ping->get_port(), port);

@@ -41,7 +41,7 @@ public:
     char *get_host();
 
 private:
-    struct sockaddr_in addr;
+    struct sockaddr_in addr = {};
     int s; // socket
     unsigned long int timeval_subtract(struct timeval *, struct timeval *);
 
