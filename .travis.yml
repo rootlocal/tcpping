@@ -8,9 +8,10 @@ jobs:
       compiler: gcc
       env:
         - TARGET_CPU=amd64 CMAKE_BUILD_TYPE=Debug ENABLE_UNIT_TESTS=ON
+    - os: linux
+      compiler: gcc
+      env:
         - TARGET_CPU=x86 CMAKE_BUILD_TYPE=Debug ENABLE_UNIT_TESTS=ON
-        - TARGET_CPU=amd64 CMAKE_BUILD_TYPE=Release ENABLE_UNIT_TESTS=OFF
-        - TARGET_CPU=x86 CMAKE_BUILD_TYPE=Release ENABLE_UNIT_TESTS=OFF
     - os: linux
       compiler: clang
       env:
@@ -18,16 +19,35 @@ jobs:
     - os: osx
       compiler: clang
         - TARGET_CPU=amd64 CMAKE_BUILD_TYPE=Debug ENABLE_UNIT_TESTS=ON
+    - os: osx
+      compiler: clang
         - TARGET_CPU=x86 CMAKE_BUILD_TYPE=Debug ENABLE_UNIT_TESTS=ON
 
 install:
   - source ci/travis/install-${TRAVIS_OS_NAME}.sh
 
 script:
-  - mkdir build && cd build > /dev/null 2>&1
-  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DTARGET_CPU=${TARGET_CPU} -DENABLE_UNIT_TESTS=${ENABLE_UNIT_TESTS} ../
-  - make
-  - file ./bin/tcpping
-  - if [ "${TRAVIS_OS_NAME}" -eq "linux" ]; then objdump -af ./bin/tcpping; fi;
-  - if [ "${TRAVIS_OS_NAME}" -eq "osx" ]; then objdump -section-headers ./bin/tcpping; fi;
-  - if [ "${ENABLE_UNIT_TESTS}" -eq "ON" ]; make test && ./bin/unit_tests; fi;
+  - |
+    mkdir build
+    cd build
+
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
+      -DTARGET_CPU=${TARGET_CPU} \
+      -DENABLE_UNIT_TESTS=${ENABLE_UNIT_TESTS} ../
+
+    make
+
+    file ./bin/tcpping
+
+    if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
+      objdump -af ./bin/tcpping
+    fi
+
+    if [ "${TRAVIS_OS_NAME}" == "osx" ]; then
+      objdump -section-headers ./bin/tcpping
+    fi
+
+    if [ "${ENABLE_UNIT_TESTS}" == "ON" ]; then
+      make test
+      ./bin/unit_tests
+    fi
