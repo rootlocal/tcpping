@@ -30,7 +30,7 @@ public:
 
     u_short get_port();
 
-    void set_port(int);
+    void set_port(u_short);
 
     int run();
 

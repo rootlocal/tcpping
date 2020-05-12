@@ -62,13 +62,13 @@ void TcpPing::set_address(char *address) {
 u_short TcpPing::get_port() {
 
     if (addr.sin_port == 0) {
-        set_port(DEFAULT_PORT);
+        set_port(static_cast<u_short> (DEFAULT_PORT));
     }
 
     return ntohs(addr.sin_port);
 }
 
-void TcpPing::set_port(int port) {
+void TcpPing::set_port(u_short port) {
     addr.sin_port = htons(port);
 }
 
