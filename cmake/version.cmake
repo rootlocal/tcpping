@@ -19,7 +19,7 @@ function(generate_version_h)
     # generate file version.h based on version.h.in
     configure_file(
             cmake/version.h.in
-            generated/version.h
+            ${PROJECT_SOURCE_DIR}/src/version.h
             @ONLY
     )
 endfunction()

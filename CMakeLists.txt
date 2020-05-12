@@ -15,28 +15,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
-#[[if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-    add_compile_options(
-            #-Werror
-
-            -Wall
-            -Wextra
-            -Wpedantic
-
-            -Wcast-align
-            -Wcast-qual
-            -Wconversion
-            -Wctor-dtor-privacy
-            -Wenum-compare
-            -Wfloat-equal
-            -Wnon-virtual-dtor
-            #-Wold-style-cast
-            -Woverloaded-virtual
-            -Wredundant-decls
-            -Wsign-conversion
-            -Wsign-promo
-    )
-endif ()]]
+#include(cmake/debugCompileOptions.cmake)
 
 # Processor Count
 include(cmake/processorCount.cmake)
@@ -47,12 +26,10 @@ if (NOT N EQUAL 0)
     set(ctest_test_args ${ctest_test_args} PARALLEL_LEVEL ${N})
 endif ()
 
-
 # Cross compiling
 if ("${TARGET_CPU}" STREQUAL "x86")
     include(cmake/x86.cmake)
 endif ()
-
 
 # contains a workaround for macOS
 include(cmake/arch.cmake)
@@ -65,7 +42,6 @@ generate_version_h()
 add_subdirectory(src)
 
 message(STATUS CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE})
-
 
 # enable testing
 enable_testing()        # <- we added this
