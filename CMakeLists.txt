@@ -38,12 +38,19 @@ macos_workaround()
 include(cmake/version.cmake)
 generate_version_h()
 
+option(ENABLE_UNIT_TESTS "Enable unit tests" OFF) # cmake -D ENABLE_UNIT_TESTS=[OFF|ON] ..
+message(STATUS "Enable testing: ${ENABLE_UNIT_TESTS}")
+if (ENABLE_UNIT_TESTS)
+    include(test/cmake/codeCoverage.cmake)
+    setup_target_for_coverage(coverage)
+    # enable testing
+    enable_testing()        # <- we added this
+    # process test/CMakeLists.txt
+    add_subdirectory(test)  # <- we added this
+endif ()
+
 # process src/CMakeLists.txt
 add_subdirectory(src)
 
 message(STATUS CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE})
 
-# enable testing
-enable_testing()        # <- we added this
-# process test/CMakeLists.txt
-add_subdirectory(test)  # <- we added this

@@ -22,15 +22,10 @@ if (NOT GCOV_PATH)
     message(FATAL_ERROR "gcov not found! Aborting...")
 endif () # NOT GCOV_PATH
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
+#add_compile_options(-Werror)
 
-
-MARK_AS_ADVANCED(
-        CMAKE_CXX_FLAGS_COVERAGE
-        CMAKE_C_FLAGS_COVERAGE
-        CMAKE_EXE_LINKER_FLAGS_COVERAGE
-        CMAKE_SHARED_LINKER_FLAGS_COVERAGE)
 
 if (NOT (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "Coverage"))
     message(WARNING "Code coverage results with an optimized (non-Debug) build may be misleading")
@@ -47,14 +42,14 @@ function(setup_target_for_coverage _targetname)
         message(FATAL_ERROR "genhtml not found! Aborting...")
     endif () # NOT GENHTML_PATH
 
-    set(exclude_coverage 'tests/*' '/usr/*' '*googletest*')
+    set(exclude_coverage 'test/*' '/usr/*' '*/googletest/*')
 
     # Setup target
     add_custom_target(${_targetname}
             # Capturing lcov counters and generating report
-            COMMAND ${LCOV_PATH} --directory ../ --capture --output-file coverage.info
-            COMMAND ${LCOV_PATH} --remove coverage.info ${exclude_coverage} --output-file coverage.info
-            COMMAND ${GENHTML_PATH} -o html coverage.info -t ${PROJECT_NAME} --num-spaces 4
+            COMMAND ${LCOV_PATH} --directory ../ --capture --output-file coverage.info --rc lcov_branch_coverage=1
+            COMMAND ${LCOV_PATH} --remove coverage.info ${exclude_coverage} --output-file coverage.info --rc lcov_branch_coverage=1
+            COMMAND ${GENHTML_PATH} -o html coverage.info -t ${PROJECT_NAME} --rc lcov_branch_coverage=1
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/coverage
             COMMENT "Processing code coverage counters and generating report.\n"
             )
