@@ -21,7 +21,7 @@ tar --strip-components=1 -xzf "${CMAKE_TAR}" -C "${CMAKE_DIR}"
 export PATH="${CMAKE_DIR}/bin:${PATH}"
 
 # multilib amd64->x86 cross compiling
-if [ "${TARGET_CPU}" == "x86" ]; then
+if [ "${TARGET_CPU}" -eq "x86" ]; then
     sudo dpkg --add-architecture i386
     sudo apt-get -qq update > /dev/null 2>&1
     # g++-multilib
