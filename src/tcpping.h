@@ -23,7 +23,7 @@ class TcpPing {
 
 public:
     TcpPing();
-    
+
     char *get_address();
 
     void set_address(char *);
@@ -37,6 +37,8 @@ public:
     void statistics();
 
     unsigned int get_seq();
+
+    char *get_host();
 
 private:
     struct sockaddr_in addr;
@@ -56,6 +58,7 @@ private:
     unsigned long int diffSum = 0;
     unsigned long int diffSum2 = 0;
     double diffMdev;
+    char *host;
 };
 
 #endif //TCPPING_TCPPING_H

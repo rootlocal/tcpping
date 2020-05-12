@@ -33,12 +33,17 @@ void TcpPing::statistics() {
     }
 }
 
+char *TcpPing::get_host() {
+    return host;
+}
+
 char *TcpPing::get_address() {
 
     return inet_ntoa(addr.sin_addr);
 }
 
 void TcpPing::set_address(char *address) {
+    host = address;
 
     if (!inet_aton(address, &addr.sin_addr)) {
 
@@ -163,7 +168,7 @@ int TcpPing::run() {
     struct timespec ts = {};
 
     ts.tv_sec = 0;
-    ts.tv_nsec = static_cast<long > (1000 * (1000000 * (1 + secs) - diff));
+    ts.tv_nsec = static_cast<long> (1000 * (1000000 * (1 + secs) - diff));
 
     nanosleep(&ts, &ts);
 

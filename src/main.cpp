@@ -34,6 +34,9 @@ int main(int argc, char *argv[]) {
 
     TcpPing *ping;
     int pingLastRunStatus = 0;
+    unsigned int countPackets = 0;
+    int c, longIndex = 0;
+
     ping = new TcpPing;
 
     // Ctrl+C handler
@@ -46,8 +49,6 @@ int main(int argc, char *argv[]) {
             exit(EXIT_FAILURE);
         }
 
-        unsigned int countPackets = 0;
-        int c, longIndex = 0;
 
         static const char *optString = "h:p:c:?V";
         static const struct option longOpts[] = {
@@ -80,6 +81,8 @@ int main(int argc, char *argv[]) {
                     break;
             }
         }
+
+        printf("Connecting to %s (%s)\n", ping->get_host(), ping->get_address());
 
         while (keepRunning) {
             pingLastRunStatus = ping->run();
