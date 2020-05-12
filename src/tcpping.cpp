@@ -2,15 +2,16 @@
 #include "tcpping.h"
 
 unsigned long int TcpPing::timeval_subtract(struct timeval *t2, struct timeval *t1) {
-    return (unsigned long int) (t2->tv_usec + 1000000 * t2->tv_sec) - (t1->tv_usec + 1000000 * t1->tv_sec);
+    unsigned long int tv1 = 0, tv2 = 0;
+
+    tv2 = static_cast<unsigned long int> (t2->tv_usec + 1000000 * t2->tv_sec);
+    tv1 = static_cast<unsigned long int> (t1->tv_usec + 1000000 * t1->tv_sec);
+
+    return (tv2 - tv1);
 }
 
 TcpPing::TcpPing() {
     gettimeofday(&startTime, NULL);
-}
-
-TcpPing::~TcpPing() {
-
 }
 
 void TcpPing::statistics() {
@@ -49,7 +50,7 @@ void TcpPing::set_address(char *address) {
             throw std::runtime_error(error);
         }
 
-        memcpy(&(addr.sin_addr.s_addr), hostent->h_addr, (size_t) hostent->h_length);
+        memcpy(&(addr.sin_addr.s_addr), hostent->h_addr, static_cast<size_t> (hostent->h_length));
     }
 }
 
@@ -73,8 +74,6 @@ unsigned int TcpPing::get_seq() {
 int TcpPing::run() {
     // note the starting time
     struct timeval tvBegin = {}, tvEnd = {};
-
-    gettimeofday(&tvBegin, NULL);
     s = socket(PF_INET, SOCK_STREAM, 0);
 
     if (s < 0) {
@@ -97,6 +96,8 @@ int TcpPing::run() {
     if (setsockopt(s, SOL_SOCKET, SO_SNDTIMEO, (char *) &timeout, sizeof(timeout)) < 0) {
         fprintf(stderr, "Failed setsockopt SO_SNDTIMEO, error %d\n", errno);
     }
+
+    gettimeofday(&tvBegin, NULL);
 
     // try to make connection
     if (connect(s, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
@@ -139,8 +140,10 @@ int TcpPing::run() {
     gettimeofday(&tvEnd, NULL);
     cnt_successful++;
 
-    unsigned long int diff = timeval_subtract(&tvEnd, &tvBegin);
-    unsigned long int secs = diff / 1000000;
+    unsigned long int diff, secs;
+
+    diff = timeval_subtract(&tvEnd, &tvBegin);
+    secs = diff / 1000000;
 
     printf("OK Connected to %s:%d, seq=%d, time=%0.3lf ms\n", get_address(), get_port(), seq, diff / 1000.);
 
@@ -158,8 +161,10 @@ int TcpPing::run() {
 
     // sleeping until the beginning of the next second
     struct timespec ts = {};
+
     ts.tv_sec = 0;
-    ts.tv_nsec = 1000 * (1000000 * (1 + secs) - diff);
+    ts.tv_nsec = static_cast<long > (1000 * (1000000 * (1 + secs) - diff));
+
     nanosleep(&ts, &ts);
 
     return EXIT_SUCCESS;

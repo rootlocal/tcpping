@@ -46,7 +46,8 @@ int main(int argc, char *argv[]) {
             exit(EXIT_FAILURE);
         }
 
-        int c, countPackets = 0, longIndex = 0;
+        unsigned int countPackets = 0;
+        int c, longIndex = 0;
 
         static const char *optString = "h:p:c:?V";
         static const struct option longOpts[] = {
@@ -67,7 +68,7 @@ int main(int argc, char *argv[]) {
                     ping->set_port(atoi(optarg));
                     break;
                 case 'c':
-                    countPackets = atoi(optarg);
+                    countPackets = static_cast<unsigned int> (atoi(optarg));
                     break;
                 case '?':
                     display_usage(argv[0]);

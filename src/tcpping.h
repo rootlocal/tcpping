@@ -23,9 +23,7 @@ class TcpPing {
 
 public:
     TcpPing();
-
-    ~TcpPing();
-
+    
     char *get_address();
 
     void set_address(char *);
