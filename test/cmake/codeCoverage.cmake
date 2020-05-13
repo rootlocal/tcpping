@@ -18,9 +18,9 @@ find_program(GCOV_PATH gcov)
 find_program(LCOV_PATH lcov)
 find_program(GENHTML_PATH genhtml)
 
-if (NOT GCOV_PATH)
-    message(FATAL_ERROR "gcov not found! Aborting...")
-endif () # NOT GCOV_PATH
+#if (NOT GCOV_PATH)
+#    message(FATAL_ERROR "gcov not found! Aborting...")
+#endif () # NOT GCOV_PATH
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")

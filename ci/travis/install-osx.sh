@@ -6,6 +6,7 @@ items=(
     "cmake"
     "lcov"
     "doxygen"
+    "ninja"
 )
 
 for item in ${items[@]}

@@ -41,6 +41,12 @@ script:
 
     file ./bin/tcpping
 
+    LDD=$(which ldd)
+
+    if [ -n "${LDD}" ]; then
+      ${LDD} ./bin/tcpping
+    fi
+
     if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
       objdump -af ./bin/tcpping
     fi
@@ -48,6 +54,8 @@ script:
     if [ "${TRAVIS_OS_NAME}" == "osx" ]; then
       objdump -section-headers ./bin/tcpping
     fi
+
+
 
     if [ "${ENABLE_UNIT_TESTS}" == "ON" ]; then
       make test

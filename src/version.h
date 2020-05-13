@@ -5,7 +5,7 @@
 #define VERSION_MAJOR 1
 #define VERSION_MINOR 0
 #define VERSION_PATCH 1
-#define GIT_HASH "unknown"
+#define GIT_HASH "be646fc"
 #define BUILD_TYPE "Release"
 
 #endif //TCPPING_VERSION_H

@@ -3,7 +3,7 @@
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get -qq update > /dev/null 2>&1
-sudo apt-get install -y g++ cmake make lcov
+sudo apt-get install -y g++ cmake make lcov ninja-build
 
 # multilib amd64->x86 cross compiling
 if [ "${TARGET_CPU}" == "x86" ]; then
